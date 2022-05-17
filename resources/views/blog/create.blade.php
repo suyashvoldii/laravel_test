@@ -1,6 +1,5 @@
 @extends('layouts.frontend') @section('content')
 <div class="container">
-     
     <div class="row justify-content-center">
         <div class="col-md-8">
             @if(session('status'))
@@ -16,15 +15,22 @@
                         @csrf
                         <div class="form-group">
                             <label for="exampleInputEmail1">Title</label>
-                            <input type="text" name="title" class="form-control" id="exampleInputEmail1">
+                            <input type="text" name="title"  class="form-control" id="" value="{{ old('title') }}">
                           </div>
+                          @error('title')
+                          <div class="text-danger">  {{ $message }}</div>
+                          @enderror
                         <div class="form-group">
                           <label for="exampleInputEmail1">Description</label>
-                          <textarea type="text" name="description" class="form-control" id="exampleInputEmail1" ></textarea>
+                          <textarea type="text" name="description" class="form-control" id="" >{{ old('description') }}</textarea>
+                          @error('description')
+                          <div class="text-danger">  {{ $message }}</div>
+                          @enderror
                         </div>
                         <div class="form-group">
                             <label for="">Status</label>
-                            <input type="checkbox" name="status" id=""> 
+                            <input type="checkbox" name="status" {{ old('description')? 'checked':'' }} id=""> 
+                           
                           </div>
                         <button type="submit" class="btn btn-primary ">Submit</button>
                       </form>               

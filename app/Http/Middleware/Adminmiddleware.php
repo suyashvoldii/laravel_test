@@ -18,17 +18,25 @@ class Adminmiddleware
     public function handle(Request $request, Closure $next)
     {
           /*return $next($request);*/
-          if(Auth::check()){
-              if(Auth::User()->role == '1'){
+        
+              if(Auth::User()){
                 return $next($request);
               }
-              else
-              {
-                  return redirect('/home')->with('status','Access denied');
-              }
-          }
-          else{
-              return redirect()->back()->with('status','login first');
-          }
+            
+        
+
+
     }
 }
+// if(Auth::check()){
+//               if(Auth::User()->role == '1'){
+//                 return $next($request);
+//               }
+//               else
+//               {
+//                   return redirect('/home')->with('status','Access denied');
+//               }
+//           }
+//           else{
+//               return redirect()->back()->with('status','login first');
+//           }

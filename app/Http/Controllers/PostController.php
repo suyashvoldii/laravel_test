@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
+use  Illuminate\Http\Response;
+use \App\Http\Requests\storepostrequest ;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -16,8 +19,17 @@ class PostController extends Controller
     public function index()
     {
 
-        $post = post::all();
+
+        $post = DB::table('posts')
+        ->join('users', 'users.id', '=', 'posts.user_id')
+        ->select('posts.id','users.name', 'posts.title', 'posts.description')
+        ->get();
+
         return view('blog.index',compact('post'));
+        
+
+        // $post = post::all();
+        // return view('blog.index',compact('post'));
     }
 
     /**
@@ -36,12 +48,26 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+
+     /**
+ * Configure the validator instance.
+ *
+ * @param  \Illuminate\Validation\Validator  $validator
+ * @return void
+ */
+
+
+    public function store(storepostrequest $request)
     {
+
+       
+        // $validated = $request->validated();
+        $validated = $request->safe()->only(['title', 'description']);
+
         $post = new Post;
         $post->user_id = Auth::id();
-        $post->title = $request->input('title');
-        $post->description = $request->input('description');
+        $post->title = $validated['title'];
+        $post->description = $validated['description'];
         $post->status = $request->input('status ') == true ? '1':'0';
         $post->save();
         return redirect()->back()->with('status','Post created successfully');
@@ -80,6 +106,9 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+  
+
         $post = post::find($id);
 
         $post->user_id = Auth::id();
@@ -100,8 +129,23 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = post::find($id);
-        $post->delete();
-        return redirect()->back()->with('status','Post Deleted successfully');
+        if(Auth::check()){
+                if(Auth::User() == $post->users || Auth::User()->role== '1' ){
+                $post->delete();
+                
+                return redirect()->back()->with('status','Post Deleted successfully');
+            }
+            else
+            {
+                return redirect('/posts')->with('cant_delete',' cant delete ');
+            }
+        }
+        else{
+            return redirect()->back()->with('status','login first');
+        }
 
+        // $post = post::find($id);
+       
+      
     }
 }

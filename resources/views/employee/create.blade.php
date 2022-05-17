@@ -1,5 +1,8 @@
 @extends('layouts.frontend') @section('content')
 <div class="container">
+  @error('title')
+    <div class="alert alert-danger">{{ $message }}</div>
+@enderror
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="mt-4 card">

@@ -28,16 +28,16 @@ class LoginController extends Controller
      * @var string
      */
     //protected $redirectTo = RouteServiceProvider::HOME;
-    protected function authenticated()
-    {
-        if(Auth::user()->role == 1){
-            return redirect('/posts')->with('status','welcome');
-          }
-          elseif(Auth::user()->role == '0'){
-            return redirect('/home')->with('status','Access denied');
-        }
+    // protected function authenticated()
+    // {
+    //     if(Auth::user()->role == 1){
+    //         return redirect('/posts')->with('status','welcome');
+    //       }
+    //       elseif(Auth::user()->role == '0'){
+    //         return redirect('/home')->with('status','Access denied');
+    //     }
           
-    }
+    // }
 
     /**
      * Create a new controller instance.

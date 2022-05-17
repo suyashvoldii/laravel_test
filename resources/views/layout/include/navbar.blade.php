@@ -19,6 +19,9 @@
         <li class="nav-item">
           <a class="nav-link" href="{{url('posts')}}">posts</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url('to_mail')}}">contact us</a>
+        </li>
         @guest
         @if (Route::has('login'))
             <li class="nav-item">
