@@ -13,9 +13,8 @@
         <li class="nav-item">
           <a class="nav-link" href="{{url('about')}}">About us</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{url('employee')}}">Employee</a>
-        </li>
+       
+   
         <li class="nav-item">
           <a class="nav-link" href="{{url('posts')}}">posts</a>
         </li>
@@ -35,6 +34,12 @@
             </li>
         @endif
         @else 
+        @if(Auth::user()->role == 1)
+        <li class="nav-item">
+          
+          <a class="nav-link" href="{{url('employee')}}">Employee</a>
+        </li>
+        @endif
         <li class="nav-item dropdown">
             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"  aria-expanded="false" >
                 {{ Auth::user()->name }}

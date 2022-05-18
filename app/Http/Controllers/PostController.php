@@ -135,9 +135,12 @@ class PostController extends Controller
                 
                 return redirect()->back()->with('status','Post Deleted successfully');
             }
-            else
-            {
-                return redirect('/posts')->with('cant_delete',' cant delete ');
+            else{
+            // {   echo"<script language='javascript'>
+            //             myFunction();
+            //     </script>
+            //     ";
+                return redirect('/posts')->with('Cant_delete',' cant delete ');
             }
         }
         else{
